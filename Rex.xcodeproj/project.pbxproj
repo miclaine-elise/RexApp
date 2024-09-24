@@ -92,6 +92,7 @@
 		B67F2FA72C6BE85E008DFE1C /* ProfileSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67F2FA62C6BE85E008DFE1C /* ProfileSearchView.swift */; };
 		B67F2FA92C6C0E17008DFE1C /* OtherUserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67F2FA82C6C0E17008DFE1C /* OtherUserProfileView.swift */; };
 		B67F2FAB2C6C1514008DFE1C /* OtherUserProfileViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67F2FAA2C6C1514008DFE1C /* OtherUserProfileViewViewModel.swift */; };
+		B6A4A0E12CA33AA700B77863 /* KeyboardResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A4A0E02CA33AA700B77863 /* KeyboardResponder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -176,6 +177,7 @@
 		B67F2FA62C6BE85E008DFE1C /* ProfileSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSearchView.swift; sourceTree = "<group>"; };
 		B67F2FA82C6C0E17008DFE1C /* OtherUserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherUserProfileView.swift; sourceTree = "<group>"; };
 		B67F2FAA2C6C1514008DFE1C /* OtherUserProfileViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherUserProfileViewViewModel.swift; sourceTree = "<group>"; };
+		B6A4A0E02CA33AA700B77863 /* KeyboardResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardResponder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -309,6 +311,7 @@
 				B66A08272C925A8200487F43 /* SuggestedViewViewModel.swift */,
 				B666FF1A2C991C6500C2B8B8 /* FollowingViewViewModel.swift */,
 				B666FF1E2C99239E00C2B8B8 /* FollowersViewViewModel.swift */,
+				B6A4A0E02CA33AA700B77863 /* KeyboardResponder.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -493,6 +496,7 @@
 				B66A08162C90F17800487F43 /* NewSuggestionView.swift in Sources */,
 				B66A080E2C86885600487F43 /* Event.swift in Sources */,
 				B67F2F582C586D42008DFE1C /* Item.swift in Sources */,
+				B6A4A0E12CA33AA700B77863 /* KeyboardResponder.swift in Sources */,
 				B67F2F6A2C5874CA008DFE1C /* NewItemInBoardViewViewModel.swift in Sources */,
 				B67F2F2B2C586028008DFE1C /* RexApp.swift in Sources */,
 				B66A08042C76D1E500487F43 /* NewItemEventView.swift in Sources */,
