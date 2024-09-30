@@ -29,6 +29,7 @@ private let boardName : String
         self.nickname = nickname
         self.isPrivate = isPrivate
     }
+
 func saveItem(){
     guard canSave else {
         return
@@ -74,11 +75,13 @@ func saveItem(){
         .collection("items")
         .document(newItem.id)
         .setData(newItem.asDictionary())
-    db.collection("users")
-        .document(uId)
-        .collection("newItemEvents")
-        .document(newItemEvent.id)
-        .setData(newItemEvent.asDictionary())
+    if !newItemEvent.isPrivate {
+        db.collection("users")
+            .document(uId)
+            .collection("newItemEvents")
+            .document(newItemEvent.id)
+            .setData(newItemEvent.asDictionary())
+    }
 }
 
 var canSave: Bool {

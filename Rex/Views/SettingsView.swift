@@ -8,19 +8,28 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @StateObject var viewModel = SettingsViewViewModel()
+    @StateObject var viewModel: SettingsViewViewModel
     @Binding var settingsViewPresented: Bool
+    @State private var showDeleteAlert = false // Add state for alert
 
-    init(settingsViewPresented: Binding<Bool>) {
+    init(settingsViewPresented: Binding<Bool>, userId: String) {
         _settingsViewPresented = settingsViewPresented
+        self._viewModel = StateObject(
+            wrappedValue:
+                    SettingsViewViewModel(userId: userId)
+            )
     }
+
     var body: some View {
         NavigationStack {
-            VStack{
-                VStack{
-                    List(){
+            VStack {
+                VStack {
+                    List {
                         Button("Log Out") {
                             viewModel.logOut()
+                        }
+                        Button("Delete Account") {
+                            showDeleteAlert = true // Show alert on button click
                         }
                     }
                     .scrollContentBackground(.hidden)
@@ -28,10 +37,20 @@ struct SettingsView: View {
                     .bold()
                     .font(.system(size: 20))
                 }
-                
+                .alert("Are you sure?", isPresented: $showDeleteAlert) { // Add alert
+                    Button("Cancel", role: .cancel) {
+                        // Cancel action
+                    }
+                    Button("Delete", role: .destructive) {
+                        viewModel.deleteAccount() // Perform delete action
+                    }
+                } message: {
+                    Text("This action will permanently delete your account.")
+                }
+
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
-                        CloseButton{
+                        CloseButton {
                             settingsViewPresented = false
                         }
                     }
@@ -46,8 +65,7 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView(settingsViewPresented:Binding(get: {
+    SettingsView(settingsViewPresented: Binding(get: {
         return true
-    }, set: { _ in
-    }))
+    }, set: { _ in }), userId: "123")
 }

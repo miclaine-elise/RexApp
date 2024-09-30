@@ -72,13 +72,14 @@ struct LoginView: View {
                 .padding(.horizontal)
                 .padding(.bottom, keyboardResponder.currentHeight == 0 ? 40 : 0)  // Adjust for keyboard height
             }
+            .onTapGesture {
+            self.hideKeyboard()
+        }
             .background {
                 Color("MainColor").ignoresSafeArea()
             }
         }
-//            .onTapGesture {
-//            self.hideKeyboard()
-//        }
+
 
     }
 }

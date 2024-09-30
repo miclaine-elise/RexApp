@@ -127,7 +127,7 @@ struct ProfileView: View {
                             }
                         }
                         .sheet(isPresented: $viewModel.showingSettingsView) {
-                            SettingsView(settingsViewPresented: $viewModel.showingSettingsView)
+                            SettingsView(settingsViewPresented: $viewModel.showingSettingsView, userId: viewModel.userId)
                         }
 //                        .sheet(isPresented: $viewModel.showingNewBoardView) {
 //                            NewBoardView(newBoardViewPresented: $viewModel.showingNewBoardView, userId: viewModel.userId, nickname: user.nickname)

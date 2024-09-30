@@ -79,13 +79,14 @@ struct RegisterView: View {
                     Spacer()
                 }
             }
+            .onTapGesture {
+                self.hideKeyboard()
+        }
+
             .background {
                 Color("MainColor").ignoresSafeArea()
             }
         }
-//            .onTapGesture {
-//                self.hideKeyboard()
-//        }
             .alert(isPresented: $viewModel.showAlert) {
                 Alert(
                     title: Text("Registration Error"),

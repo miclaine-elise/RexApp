@@ -108,11 +108,13 @@ class NewItemViewViewModel: ObservableObject {
                 .collection("items")
                 .document(newId)
                 .setData(newItem!.asDictionary())
-            db.collection("users")
-                .document(userId)
-                .collection("newItemEvents")
-                .document(newItemEvent.id)
-                .setData(newItemEvent.asDictionary())
+            if !board.isPrivate{
+                db.collection("users")
+                    .document(userId)
+                    .collection("newItemEvents")
+                    .document(newItemEvent.id)
+                    .setData(newItemEvent.asDictionary())
+            }
         } else {
             showAlert = true // Show alert if no board is selected
         }

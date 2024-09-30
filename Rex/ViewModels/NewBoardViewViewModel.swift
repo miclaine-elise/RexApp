@@ -59,11 +59,13 @@ class NewBoardViewViewModel: ObservableObject {
             .collection("boards")
             .document(newId)
             .setData(newBoard.asDictionary())
-        db.collection("users")
-            .document(userId)
-            .collection("newBoardEvents")
-            .document(newBoardEvent.id)
-            .setData(newBoardEvent.asDictionary())
+        if !newBoardEvent.isPrivate{
+            db.collection("users")
+                .document(userId)
+                .collection("newBoardEvents")
+                .document(newBoardEvent.id)
+                .setData(newBoardEvent.asDictionary())
+        }
     }
     
     var canSave: Bool {
