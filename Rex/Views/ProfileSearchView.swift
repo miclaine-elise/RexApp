@@ -84,7 +84,7 @@ struct SearchBarView: View {
     var body: some View {
         
         TextField("Search Users", text: $keyword)
-            .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+            .autocapitalization(.words)
             .disableAutocorrection(true)
             .padding(8)
             .overlay(

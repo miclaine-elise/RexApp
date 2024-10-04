@@ -116,6 +116,14 @@ class FeedViewViewModel: ObservableObject {
         //self.events.sort { $0.eventDate < $1.eventDate }
 
     }
+    func refreshFeed() async {
+        self.boardEvents.removeAll()
+        self.itemEvents.removeAll()
+        self.combinedEvents.removeAll()
+
+        fetchFollowing()
+    }
 
     }
+
 

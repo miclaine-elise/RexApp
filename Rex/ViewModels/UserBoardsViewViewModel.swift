@@ -194,6 +194,8 @@ class UserBoardsViewViewModel: ObservableObject {
             .collection("boards")
             .document(id)
             .delete()
+        self.boards.removeAll { $0.id == id }
+        self.applySearchFilter()
     }
 }
 

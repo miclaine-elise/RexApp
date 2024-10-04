@@ -20,7 +20,7 @@ struct NewItemEventView: View {
             Color("SecondaryColor")
 
         VStack (alignment: .leading) {
-            NavigationLink(destination: ItemView(userId: viewModel.newItemEvent.userId, item: viewModel.eventItemFetched, isOwner: false)){
+            NavigationLink(destination: OtherUserItemView(userId: viewModel.newItemEvent.userId, item: viewModel.eventItemFetched, isOwner: false)){
                 VStack{
                     HStack{
                         Text("\(viewModel.newItemEvent.nickname) added a new rex, \(Text(viewModel.eventItemFetched.name).bold()), to \(viewModel.newItemEvent.boardName)")
@@ -29,7 +29,6 @@ struct NewItemEventView: View {
                     if viewModel.eventItemFetched.note != "" {
                         Text("\(viewModel.eventItemFetched.note)")
                             .font(.system(size: 15))
-                           // .foregroundColor(Color(.gray))
                             .padding(2)
                     }
                 }

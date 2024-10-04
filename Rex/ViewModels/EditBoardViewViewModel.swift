@@ -58,10 +58,60 @@ var canSave: Bool {
         guard let uId = Auth.auth().currentUser?.uid else {
             return
         }
-        db.collection("users")
+        let boardRef = db.collection("users")
             .document(uId)
             .collection("boards")
             .document(board.id)
-            .delete()
+            
+            // Delete the board itself after items are deleted
+            boardRef.delete { error in
+                if let error = error {
+                    print("Failed to delete board: \(error)")
+                } else {
+                    print("Board successfully deleted")
+                }
+            }
+        db.collection("users")
+            .document(uId)
+            .collection("newBoardEvents")
+            .whereField("boardId", isEqualTo: board.id) // Query for documents where boardId matches
+            .getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("Failed to fetch newBoardEvents for deletion: \(error)")
+                    return
+                }
+
+                // Delete each document in the newBoardEvents collection that matches the query
+                querySnapshot?.documents.forEach { document in
+                    document.reference.delete { error in
+                        if let error = error {
+                            print("Failed to delete newBoardEvent \(document.documentID): \(error)")
+                        } else {
+                            print("newBoardEvent \(document.documentID) successfully deleted")
+                        }
+                    }
+                }
+            }
+        db.collection("users")
+            .document(uId)
+            .collection("newItemEvents")
+            .whereField("boardId", isEqualTo: board.id) // Query for documents where boardId matches
+            .getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("Failed to fetch newBoardEvents for deletion: \(error)")
+                    return
+                }
+
+                // Delete each document in the newBoardEvents collection that matches the query
+                querySnapshot?.documents.forEach { document in
+                    document.reference.delete { error in
+                        if let error = error {
+                            print("Failed to delete newBoardEvent \(document.documentID): \(error)")
+                        } else {
+                            print("newBoardEvent \(document.documentID) successfully deleted")
+                        }
+                    }
+                }
+            }
     }
 }

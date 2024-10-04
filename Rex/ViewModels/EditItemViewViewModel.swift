@@ -66,6 +66,28 @@ var canSave: Bool {
             .collection("items")
             .document(item.id)
             .delete()
+        
+        db.collection("users")
+            .document(uId)
+            .collection("newItemEvents")
+            .whereField("itemId", isEqualTo: item.id) // Query for documents where boardId matches
+            .getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("Failed to fetch newBoardEvents for deletion: \(error)")
+                    return
+                }
+
+                // Delete each document in the newBoardEvents collection that matches the query
+                querySnapshot?.documents.forEach { document in
+                    document.reference.delete { error in
+                        if let error = error {
+                            print("Failed to delete newBoardEvent \(document.documentID): \(error)")
+                        } else {
+                            print("newBoardEvent \(document.documentID) successfully deleted")
+                        }
+                    }
+                }
+            }
     }
 }
 

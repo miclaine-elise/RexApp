@@ -151,11 +151,6 @@ struct OtherUserTopRexView: View {
                 ForEach(viewModel.topFiveItems) { item in
                     NavigationLink(destination: OtherUserItemView(userId: viewModel.userId, item: item, isOwner: isOwner)){
                         ListItemView(item: item, isOwner: isOwner)
-                            .swipeActions {
-                                Button("Delete") {
-                                    viewModel.delete(id: item.id)
-                                }.tint(.red)
-                            }
                     }
                     Divider()
                 }
@@ -192,11 +187,6 @@ struct OtherUserNotTopRexView: View {
             ForEach(viewModel.items) { item in
                 NavigationLink(destination: OtherUserItemView(userId: viewModel.userId, item: item, isOwner: isOwner)){
                     ListItemView(item: item, isOwner: isOwner)
-                        .swipeActions {
-                            Button("Delete") {
-                                viewModel.delete(id: item.id)
-                            }.tint(.red)
-                        }
                 }
 
                 Divider()

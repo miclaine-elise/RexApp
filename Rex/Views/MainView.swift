@@ -9,6 +9,8 @@ import SwiftUI
 
 struct MainView: View {
     @StateObject var viewModel = MainViewViewModel()
+    @State private var selectedTab: Int = 0 // Track the currently selected tab
+    @State private var previousSelectedTab: Int = 0 // Track the previous tab to detect re-selection
 
     init() {
         let appearance = UITabBarAppearance()
@@ -23,20 +25,35 @@ struct MainView: View {
 
     var body: some View {
         if viewModel.isSignedIn, viewModel.currentUserId != "" {
-            TabView() {
+            TabView(selection: $selectedTab) {
                 FeedView(currentUserId: viewModel.currentUserId)
                     .tabItem {
-                            Image(systemName: "house")
+                        Image(systemName: "house")
                     }
-                
+                    .tag(0)
+                    .onAppear {
+                        if selectedTab == previousSelectedTab {
+                           
+                        }
+                        previousSelectedTab = selectedTab
+                    }
+
                 CreateView(userId: viewModel.currentUserId)
                     .tabItem {
-                            Image(systemName: "plus.square")
+                        Image(systemName: "plus.square")
+                    }
+                    .tag(1)
+                    .onAppear {
+                        previousSelectedTab = selectedTab
                     }
 
                 ProfileView(userId: viewModel.currentUserId)
                     .tabItem {
-                            Image(systemName: "person.circle")
+                        Image(systemName: "person.circle")
+                    }
+                    .tag(2)
+                    .onAppear {
+                        previousSelectedTab = selectedTab
                     }
             }
         } else {
@@ -44,7 +61,6 @@ struct MainView: View {
         }
     }
 }
-
 
 #Preview {
     MainView()

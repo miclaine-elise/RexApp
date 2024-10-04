@@ -45,9 +45,17 @@ class UsersLookupViewModel: ObservableObject {
             }
     }
     func fetchUsers(from keyword: String) {
-        db.collection("users").whereField("keywordsForLookup", arrayContains: keyword).getDocuments { querySnapshot, error in
-            guard let documents = querySnapshot?.documents, error == nil else {return}
-            self.queriedUsers = documents.compactMap { queryDocumentSnapshot in
-                try? queryDocumentSnapshot.data(as: User.self)}}
+        let lowercaseKeyword = keyword.lowercased()
+        
+        db.collection("users")
+            .whereField("keywordsForLookup", arrayContains: lowercaseKeyword)
+            .getDocuments { querySnapshot, error in
+                guard let documents = querySnapshot?.documents, error == nil else { return }
+                
+                self.queriedUsers = documents.compactMap { queryDocumentSnapshot in
+                    try? queryDocumentSnapshot.data(as: User.self)
+                }
+            }
     }
+
 }

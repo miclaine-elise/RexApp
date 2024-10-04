@@ -31,18 +31,19 @@ class OtherUserBoardsViewViewModel: ObservableObject {
         db.collection("users")
             .document(user.id)
             .collection("boards")
+            .whereField("isPrivate", isEqualTo: false) // Only fetch boards where isPrivate is false
             .order(by: "modifiedDate")
             .getDocuments { querySnapshot, error in
                 if let error = error {
                     print(error)
-                return
+                    return
                 }
                 guard let documents = querySnapshot?.documents else {
                     print("No boards found")
                     return
                 }
+                
                 self.boards = documents.map { document in
-                    
                     let data = document.data()
                     return Board(
                         id: data["id"] as? String ?? "",
@@ -56,7 +57,8 @@ class OtherUserBoardsViewViewModel: ObservableObject {
                 }
                 self.applySearchFilter()
             }
-        }
+    }
+
     
     func applySearchFilter() {
         self.filteredBoards.removeAll()

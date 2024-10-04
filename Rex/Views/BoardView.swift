@@ -147,11 +147,6 @@ struct TopRexView: View {
                     let item = viewModel.topFiveItems[index]
                     NavigationLink(destination: ItemView(userId: viewModel.userId, item: item, isOwner: isOwner)) {
                         ListItemView(item: item, isOwner: isOwner)
-                            .swipeActions {
-                                Button("Delete") {
-                                    viewModel.delete(id: item.id)
-                                }.tint(.red)
-                            }
                             .draggable(item)
                     }
                     // Add Divider except for the last item
@@ -215,12 +210,6 @@ struct NotTopRexView: View {
                     ForEach(viewModel.items) { item in
                         NavigationLink(destination: ItemView(userId: viewModel.userId, item: item, isOwner: isOwner)) {
                             ListItemView(item: item, isOwner: isOwner)
-                                .swipeActions {
-                                    Button("Delete") {
-                                        viewModel.delete(id: item.id)
-                                    }
-                                    .tint(.red)
-                                }
                                 .draggable(item)
                         }
                         Divider()

@@ -41,6 +41,9 @@ struct FeedView: View {
                     Spacer()
                 }
             }
+            .refreshable {
+                await viewModel.refreshFeed()
+            }
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Image("Logo")
