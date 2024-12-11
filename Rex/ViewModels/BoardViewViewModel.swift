@@ -93,6 +93,8 @@ class BoardViewViewModel: ObservableObject {
                         
                     })
                 }
+        print(self.board.name);
+        print(self.topFiveItems);
     }
 
     func moveItem(items: [Item], isTopFive: Bool) {

@@ -11,6 +11,7 @@ import FirebaseAuth
 class ItemViewViewModel: ObservableObject {
     @Published var showingEditItemView = false
     @Published var savedItems = [String]()
+    @Published var imageProfileUrl = ""
 
     public let userId : String
     public let item: Item
@@ -19,6 +20,7 @@ class ItemViewViewModel: ObservableObject {
     init(userId: String, item: Item) {
         self.userId = userId
         self.item = item
+        fetchProfilePhoto()
     }
     func saveItem() {
         let newId = UUID().uuidString
@@ -33,5 +35,14 @@ class ItemViewViewModel: ObservableObject {
             .setData(item.asDictionary())
         self.savedItems.append(item.id)
 
+    }
+    func fetchProfilePhoto(){
+        db.collection("users")
+            .document(userId)
+            .getDocument { (document, error) in
+                if let document = document, document.exists {
+                    self.imageProfileUrl = document.get("imageProfileUrl") as? String ?? ""
+                }
+            }
     }
 }

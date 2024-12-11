@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct OtherUserItemView: View {
     @Environment(\.dismiss) var dismiss
@@ -67,6 +68,28 @@ struct OtherUserItemView: View {
 
             }
         .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing){
+                    NavigationLink(destination: OtherUserProfileView(otherUserId: item.userId)){
+                        HStack {
+                            if viewModel.imageProfileUrl != "" {
+                                WebImage(url: URL(string: viewModel.imageProfileUrl))
+                                    .resizable()
+                                    .scaledToFill()
+                                    .foregroundColor(Color("TextColor"))
+                                    .frame(width: 20, height: 20)
+                                    .clipShape(Circle())
+                                    .padding()
+                            } else {
+                                Image(systemName: "person.circle")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(Color("TextColor"))
+                                    .frame(width: 20, height: 20)
+                                    .padding()
+                            }
+                        }
+                    }
+                }
                 ToolbarItem(placement: .navigationBarTrailing){
                         if(viewModel.savedItems.contains(item.id)){
                             Button {

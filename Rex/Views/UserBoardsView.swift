@@ -10,8 +10,7 @@ import SwiftUI
 struct UserBoardsView: View {
     @StateObject var viewModel:  UserBoardsViewViewModel
 
-    init(/*showingNewBoardView: Binding<Bool>, */userId: String, nickname: String){
-//        _showingNewBoardView = showingNewBoardView
+    init(userId: String, nickname: String){
         
         self._viewModel = StateObject(
             wrappedValue:

@@ -29,24 +29,30 @@ struct ProfileView: View {
             ScrollView{
                 VStack{
                     if let user = viewModel.currentUser {
-                        PhotosPicker(selection: $viewModel.imageSelection,
-                                     matching: .images,
-                                     photoLibrary: .shared()) {
-                            if user.imageProfileUrl != "" {
-                                WebImage(url: URL(string: user.imageProfileUrl))
-                                    .resizable()
-                                    .scaledToFill()
-                                    .foregroundColor(Color("TextColor"))
-                                    .frame(width: 125, height: 125)
-                                    .clipShape(Circle())
-                                    .padding()
-                            } else {
-                                Image(systemName: "person.circle")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(Color("TextColor"))
-                                    .frame(width: 125, height: 125)
-                                    .padding()
+                        if viewModel.isUpdatingImage{
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle())
+                                .frame(width: 125, height: 125)
+                        } else {
+                            PhotosPicker(selection: $viewModel.imageSelection,
+                                         matching: .images,
+                                         photoLibrary: .shared()) {
+                                if user.imageProfileUrl != "" {
+                                    WebImage(url: URL(string: user.imageProfileUrl))
+                                        .resizable()
+                                        .scaledToFill()
+                                        .foregroundColor(Color("TextColor"))
+                                        .frame(width: 125, height: 125)
+                                        .clipShape(Circle())
+                                        .padding()
+                                } else {
+                                    Image(systemName: "person.circle")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .foregroundColor(Color("TextColor"))
+                                        .frame(width: 125, height: 125)
+                                        .padding()
+                                }
                             }
                         }
                         VStack(spacing: 0) {
@@ -141,6 +147,7 @@ struct ProfileView: View {
                 }
             }
             .background{Color("MainColor")                .ignoresSafeArea()}
+            
         }
     }
 }

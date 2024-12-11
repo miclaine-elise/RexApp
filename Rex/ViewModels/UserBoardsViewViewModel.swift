@@ -67,10 +67,11 @@ class UserBoardsViewViewModel: ObservableObject {
     }
     
     func fetchBoards() {
+        print("called fetch boards")
         db.collection("users")
             .document(userId)
             .collection("boards")
-            .order(by: "modifiedDate", descending: true)
+            .order(by: "modifiedDate", descending: false)
             .addSnapshotListener { querySnapshot, error in
                 if let error = error {
                     self.errorMessage = "Failed to listen for new Boards: \(error)"

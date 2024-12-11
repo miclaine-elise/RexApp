@@ -21,10 +21,11 @@ class ProfileViewViewModel: ObservableObject {
     @Published var selectedProfileView = "UserBoardsView"
     @Published var searchBoards = ""
     @Published var boards = [Board]()
+    @Published var isUpdatingImage = false;
     @Published var selectedImage: UIImage? = nil
     @Published var imageSelection: PhotosPickerItem? = nil
-    //DO NOT DELETE THESE COMMENTS, WILL NEED FOR UPDATING PROFILE IMAGE
-{
+
+    {
         didSet {
             setImage(from: imageSelection)
         }
@@ -32,7 +33,7 @@ class ProfileViewViewModel: ObservableObject {
     
     private func setImage(from selection: PhotosPickerItem?) {
         guard let selection else { return }
-        
+        self.isUpdatingImage = true;
         Task {
             if let data = try? await selection.loadTransferable(type: Data.self){
                 if let uiImage = UIImage(data: data) {
@@ -46,19 +47,29 @@ class ProfileViewViewModel: ObservableObject {
     func saveImage() {
         let storage = Storage.storage()
         let ref = storage.reference(withPath: userId)
-        guard let imageData = self.selectedImage?.jpegData(compressionQuality: 0.5) else { return }
+        guard let imageData = self.selectedImage?.jpegData(compressionQuality: 0.5) else {         
+            self.isUpdatingImage = false
+            return }
         ref.putData(imageData, metadata: nil) { metadata, err in
             if let err = err {
                 self.errorMessage = "Failed to push image to storage: \(err)"
+                self.isUpdatingImage = false
+
                 return
             }
             ref.downloadURL { url, err in
                 if let err = err {
                     self.errorMessage = "Failed to retriece downloadURL: \(err)"
+                    self.isUpdatingImage = false
+
                     return
                 }
-                guard let url = url else { return }
+                guard let url = url else { 
+                    self.isUpdatingImage = false
+return }
                 self.updateProfilePhoto(imageProfileUrl: url)
+                self.isUpdatingImage = false
+
             }
         }
     }

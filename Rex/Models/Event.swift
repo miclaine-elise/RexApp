@@ -6,10 +6,7 @@
 //
 
 import Foundation
-//protocol Event: Identifiable {
-//    var id: String { get }
-//    var eventDate: TimeInterval { get }
-//}
+
 enum EventWrapper: Identifiable {
     case board(NewBoardEvent)
     case item(NewItemEvent)

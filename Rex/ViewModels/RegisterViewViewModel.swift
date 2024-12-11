@@ -62,7 +62,6 @@ class RegisterViewViewModel: ObservableObject {
     }
 
     private func validate() -> Bool {
-        // Check for empty fields
         guard !firstName.trimmingCharacters(in: .whitespaces).isEmpty else {
             errorMessage = "Please enter your first name."
             return false
