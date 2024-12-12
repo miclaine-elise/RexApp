@@ -17,44 +17,6 @@ struct OtherUserBoardsView: View {
                 OtherUserBoardsViewViewModel(user: user)
         )
     }
-//    private let fixedColumn = [
-//        GridItem(.fixed(200)),
-//        GridItem(.fixed(200))
-//    ]
-//    var body: some View {
-//        HStack {
-//            TextField("Search", text: $viewModel.searchBoards)
-//                .padding(8)
-//                .overlay(
-//                    RoundedRectangle(cornerRadius: 20)
-//                        .stroke(Color("TextColor"))
-//                )
-//            Button {
-//                //Action
-//            } label: {
-//                Image(systemName: "plus")
-//                    .resizable()
-//                    .aspectRatio(contentMode: .fit)
-//                    .frame(width: 20, height: 20)
-//                    .foregroundColor(Color("FunColor"))
-//            }
-//        }
-//        LazyVGrid(columns: fixedColumn, spacing: 20) {
-//            ForEach(viewModel.boards) { board in
-//                NavigationLink(destination: OtherUserBoardView( userId: user.id, board: board, isOwner: false)){
-//                    ListBoardView(userId: user.id, board: board, isOwner: false)
-//                }
-//            }
-//        }
-//    }
-//}
-
-
-//#Preview {
-//    OtherUserBoardsView()
-//}
-
-
     var body: some View {
         HStack {
             TextField("Search", text: $viewModel.searchBoards)

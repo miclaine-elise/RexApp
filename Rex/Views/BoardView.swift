@@ -173,19 +173,9 @@ struct TopRexView: View {
                 viewModel.moveItem(items: droppedItems, isTopFive: true)
                 return true
             } else {
-                // Show an alert when the limit is reached
-                showLimitAlert = true
                 return false
             }
         }
-//        .alert(isPresented: $showLimitAlert) {
-//            Alert(
-//                title: Text("Limit Reached"),
-//                message: Text("You are limited to 5 top rex"),
-//                dismissButton: .default(Text("OK"))
-//            )
-//        
-//        }
     }
 }
 struct NotTopRexView: View {

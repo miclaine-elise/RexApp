@@ -44,7 +44,7 @@ class FeedViewViewModel: ObservableObject {
                 }
                 self.following = data["following"] as? Array<String> ?? []
                 self.following.append(self.currentUserId)
-                self.fetchEvents() //This is where you left off. because its asyncronous, you have to call the fetch events once you have actually fetched following. Next you should test if this breaks once you follow more than one person.
+                self.fetchEvents()
             }
     }
     func fetchEvents() {

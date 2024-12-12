@@ -27,6 +27,7 @@ class BoardViewViewModel: ObservableObject {
         fetchItems()
         fetchProfilePhoto()
     }
+
     func fetchItems() {
         db.collection("users")
             .document(userId)
@@ -149,8 +150,7 @@ class BoardViewViewModel: ObservableObject {
             .collection("savedBoards")
             .document(board.id)
             .delete()
-//        self.savedBoards = self.savedBoards.filter { $0 != board.id}
-//        print(self.savedBoards)
+
 
     }
     func delete(boardId: String) {
@@ -159,7 +159,6 @@ class BoardViewViewModel: ObservableObject {
             .collection("boards")
             .document(boardId)
             
-            // Delete the board itself after items are deleted
             boardRef.delete { error in
                 if let error = error {
                     print("Failed to delete board: \(error)")
@@ -170,14 +169,13 @@ class BoardViewViewModel: ObservableObject {
         db.collection("users")
             .document(userId)
             .collection("newBoardEvents")
-            .whereField("boardId", isEqualTo: boardId) // Query for documents where boardId matches
+            .whereField("boardId", isEqualTo: boardId)
             .getDocuments { querySnapshot, error in
                 if let error = error {
                     print("Failed to fetch newBoardEvents for deletion: \(error)")
                     return
                 }
 
-                // Delete each document in the newBoardEvents collection that matches the query
                 querySnapshot?.documents.forEach { document in
                     document.reference.delete { error in
                         if let error = error {
@@ -191,14 +189,14 @@ class BoardViewViewModel: ObservableObject {
         db.collection("users")
             .document(userId)
             .collection("newItemEvents")
-            .whereField("boardId", isEqualTo: boardId) // Query for documents where boardId matches
+            .whereField("boardId", isEqualTo: boardId) 
             .getDocuments { querySnapshot, error in
                 if let error = error {
                     print("Failed to fetch newBoardEvents for deletion: \(error)")
                     return
                 }
 
-                // Delete each document in the newBoardEvents collection that matches the query
+
                 querySnapshot?.documents.forEach { document in
                     document.reference.delete { error in
                         if let error = error {
