@@ -12,6 +12,7 @@ class LoginViewViewModel: ObservableObject {
     @Published var email = ""
     @Published var password = ""
     @Published var errorMessage = ""
+    @Published var showAlert = false
     init() {
        
     }
@@ -22,6 +23,13 @@ class LoginViewViewModel: ObservableObject {
         }
         //Try log in
         Auth.auth().signIn(withEmail: email, password: password)
+        { [weak self] result, error in
+            guard let userId = result?.user.uid else {
+                self?.errorMessage = error?.localizedDescription ?? "Login failed"
+                self?.showAlert = true
+                return
+            }
+        }
     }
     private func validate() -> Bool {
         guard !email.trimmingCharacters(in: .whitespaces).isEmpty, !password.trimmingCharacters(in: .whitespaces).isEmpty else {
