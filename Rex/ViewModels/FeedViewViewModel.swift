@@ -29,8 +29,10 @@ class FeedViewViewModel: ObservableObject {
     @Published var itemEvents = [NewItemEvent]()
     
     private func updateCombinedEvents(with newEvent: EventWrapper) {
-        combinedEvents.append(newEvent)
-        combinedEvents.sort { $0.eventDate > $1.eventDate }
+        if !combinedEvents.contains(where: { $0.id == newEvent.id }) {
+            combinedEvents.append(newEvent)
+            combinedEvents.sort { $0.eventDate > $1.eventDate }
+        }
     }
     
     func fetchFollowing () {

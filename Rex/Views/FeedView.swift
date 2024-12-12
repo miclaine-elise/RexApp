@@ -30,11 +30,14 @@ struct FeedView: View {
                                     .padding(.leading)
                                     .padding(.trailing)
                                     .padding(4)
+                                    .id(boardEvent.id)
+
                             case .item(let itemEvent):
                                 NewItemEventView(newItemEvent: itemEvent, currentUserId: viewModel.currentUserId)
                                     .padding(.leading)
                                     .padding(.trailing)
                                     .padding(4)
+                                    .id(itemEvent.id)
                             }
                         }
                     }

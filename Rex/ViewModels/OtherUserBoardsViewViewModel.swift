@@ -62,30 +62,39 @@ class OtherUserBoardsViewViewModel: ObservableObject {
     
     func applySearchFilter() {
         self.filteredBoards.removeAll()
-        if searchBoards.isEmpty {
+        let searchQuery = searchBoards.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        if searchQuery.isEmpty {
             self.filteredBoards = boards
-        } else {
-            for board in boards {
-                let boardMatches = board.name.localizedCaseInsensitiveContains(searchBoards)
-                
-                if boardMatches {
-                    // If the board name matches, directly add it to filteredBoards
-                    self.filteredBoards.append(board)
-                } else {
-                    // If the board name doesn't match, check its items
-                    fetchItems(for: board) { items in
-                        // Filter the items based on the search query
-                        let matchingItems = items.filter { $0.name.localizedCaseInsensitiveContains(self.searchBoards) }
-                        
-                        if !matchingItems.isEmpty {
-                            // If there are matching items, create a new Board with those items and add it to filteredBoards
-                            self.filteredBoards.append(board)
-                        }
+            return
+        }
+        
+        let dispatchGroup = DispatchGroup()
+        var matchingBoards = [Board]()
+        
+        for board in boards {
+            let boardMatches = board.name.localizedCaseInsensitiveContains(searchQuery)
+            
+            if boardMatches {
+                matchingBoards.append(board)
+            } else {
+                dispatchGroup.enter()
+                fetchItems(for: board) { items in
+                    let matchingItems = items.filter { $0.name.localizedCaseInsensitiveContains(searchQuery) }
+                    if !matchingItems.isEmpty {
+                        matchingBoards.append(board)
                     }
+                    dispatchGroup.leave()
                 }
             }
         }
+        
+        dispatchGroup.notify(queue: .main) {
+            self.filteredBoards = matchingBoards
+        }
     }
+
+
     private func fetchItems(for board: Board, completion: @escaping ([Item]) -> Void) {
         db.collection("users")
             .document(user.id)

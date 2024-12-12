@@ -34,6 +34,7 @@ struct OtherUserBoardsView: View {
                 ForEach(viewModel.filteredBoards.indices.filter { $0 % 2 == 0 }, id: \.self) { index in
                     NavigationLink(destination: OtherUserBoardView( userId: user.id, board: viewModel.filteredBoards[index], isOwner: false)){
                         ListBoardView(userId: user.id, board: viewModel.filteredBoards[index], isOwner: false)
+                            .id(viewModel.filteredBoards[index].id)
                     }
                 }
             }
@@ -43,6 +44,7 @@ struct OtherUserBoardsView: View {
                 ForEach(viewModel.filteredBoards.indices.filter { $0 % 2 != 0 }, id: \.self) { index in
                     NavigationLink(destination: OtherUserBoardView( userId: user.id, board: viewModel.filteredBoards[index], isOwner: false)){
                         ListBoardView(userId: user.id, board: viewModel.filteredBoards[index], isOwner: false)
+                            .id(viewModel.filteredBoards[index].id)
                     }
                 }
             }

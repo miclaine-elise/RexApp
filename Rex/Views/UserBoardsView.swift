@@ -41,7 +41,7 @@ struct UserBoardsView: View {
                                 board: viewModel.filteredBoards[index],
                                 isOwner: true
                             )
-                            .id(viewModel.filteredBoards[index].id) // Force re-render
+                            .id(viewModel.filteredBoards[index].id)
                         }
                     }
                 }

@@ -30,41 +30,41 @@ class UserBoardsViewViewModel: ObservableObject {
         self.nickname = nickname
         fetchBoards()
     }
-    func fetchItems(board: Board) {
-        db.collection("users")
-            .document(userId)
-            .collection("boards")
-            .document(board.id)
-            .collection("items")
-            .order(by: "createdDate")
-            .getDocuments { querySnapshot, error in
-                if let error = error {
-                    self.errorMessage = "Failed to listen for new Boards: \(error)"
-                    print(error)
-                    return
-                }
-                guard let documents = querySnapshot?.documents else {
-                    print("No items found")
-                    return
-                }
-                for document in documents {
-                    let data = document.data()
-                    let item = Item(
-                        id: data["id"] as? String ?? "",
-                        userId: data["userId"] as? String ?? "",
-                        nickname: data["nickname"] as? String ?? "",
-                        boardId: data["boardId"] as? String ?? "",
-                        name: data["name"] as? String ?? "",
-                        note: data["note"] as? String ?? "",
-                        link: data["link"] as? String ?? "",
-                        isTopFive: data["isTopFive"] as? Bool ?? false,
-                        createdDate: data["createdDate"] as? TimeInterval ?? Date().timeIntervalSince1970,
-                        modifiedDate: data["modifiedDate"] as? TimeInterval ?? Date().timeIntervalSince1970
-                    )
-                    self.items.append(item)
-                }
-            }
-    }
+//    func fetchItems(board: Board) {
+//        db.collection("users")
+//            .document(userId)
+//            .collection("boards")
+//            .document(board.id)
+//            .collection("items")
+//            .order(by: "createdDate")
+//            .getDocuments { querySnapshot, error in
+//                if let error = error {
+//                    self.errorMessage = "Failed to listen for new Boards: \(error)"
+//                    print(error)
+//                    return
+//                }
+//                guard let documents = querySnapshot?.documents else {
+//                    print("No items found")
+//                    return
+//                }
+//                for document in documents {
+//                    let data = document.data()
+//                    let item = Item(
+//                        id: data["id"] as? String ?? "",
+//                        userId: data["userId"] as? String ?? "",
+//                        nickname: data["nickname"] as? String ?? "",
+//                        boardId: data["boardId"] as? String ?? "",
+//                        name: data["name"] as? String ?? "",
+//                        note: data["note"] as? String ?? "",
+//                        link: data["link"] as? String ?? "",
+//                        isTopFive: data["isTopFive"] as? Bool ?? false,
+//                        createdDate: data["createdDate"] as? TimeInterval ?? Date().timeIntervalSince1970,
+//                        modifiedDate: data["modifiedDate"] as? TimeInterval ?? Date().timeIntervalSince1970
+//                    )
+//                    self.items.append(item)
+//                }
+//            }
+//    }
     
     func fetchBoards() {
         db.collection("users")
